@@ -1,0 +1,89 @@
+MARECHIARO — MENÙ NELLE 19 LINGUE
+
+CONSEGNA
+Marechiaro_menu_19_lingue.csv: CSV unico dei 13.737 campi con testo,
+723 per lingua. ID e fonte italiana invariati; categorie e sottocategorie
+approvate conservate; bozze revisionate. Nessuna API di traduzione usata.
+Marechiaro_menu_completo_con_vuoti.csv: inventario completo dei 1.907
+campi originali per ciascuna lingua (36.233 righe), inclusi vuoti e null.
+I due CSV unificati sono per consultazione e revisione: la loro struttura
+non coincide con le singole tabelle Supabase.
+
+tabelle_supabase/: cinque CSV conformi alle colonne testuali delle tabelle:
+- menu_category_translations.csv: 133 record
+- menu_subcategory_translations.csv: 323 record
+- menu_intro_translations.csv: 76 record
+- menu_setting_translations.csv: 152 record
+- menu_item_translations.csv: 5.890 record
+Totale: 6.574 record tabellari per 13.737 campi testuali.
+I CSV tabellari usano UTF-8 e convenzione PostgreSQL CSV: NULL è un campo
+vuoto non quotato; una stringa vuota è un campo quotato "". Gli ID tecnici
+delle traduzioni non sono inventati; sono presenti solo i riferimenti
+category_id, subcategory_id, intro_id, setting_id e item_id.
+Gli otto menu_settings con testo vengono tradotti; i sette valori vuoti
+non generano nuove traduzioni. Prezzi, disponibilità, ordinamenti,
+allergeni e altri campi fuori dalla fonte testuale non sono modificati.
+
+IMPORTAZIONE
+Marechiaro_importazione_19_lingue.sql è lo script unico per tutte e cinque
+le tabelle. È autonomo: incorpora i dati e non richiede di importare prima
+i CSV. Non eseguire entrambi i percorsi di importazione.
+L’SQL non è stato eseguito su Supabase né su un database di prova.
+La sintassi delle istruzioni e dei blocchi PL/pgSQL è stata verificata
+con il parser PostgreSQL pglast. Questa verifica non prova le politiche RLS,
+i trigger o le condizioni effettive del database di destinazione.
+
+Prima di eseguire lo script, esaminare i file e confermare l’importazione.
+L’esecuzione va fatta come un’unica transazione, da SQL Editor o con psql
+con ON_ERROR_STOP=1. Evitare di eseguire frammenti separati.
+Esempio locale, usando una connessione gestita in modo sicuro:
+psql "$SUPABASE_DATABASE_URL" -v ON_ERROR_STOP=1 -f Marechiaro_importazione_19_lingue.sql
+Non condividere la stringa di connessione o le credenziali in chat.
+
+Lo script:
+- confronta le entità italiane con la fonte prima di importarle;
+- aggiorna i record esistenti preservandone gli ID tecnici;
+- inserisce solo i record mancanti, con ID generati dal database;
+- interrompe l’importazione se nuovi ID non sono generati automaticamente;
+- rispetta chiavi esterne e vincoli univoci e non cambia le tabelle italiane;
+- mantiene l’atomicità mediante BEGIN/COMMIT;
+- aggiorna updated_at per le traduzioni importate.
+Se una lingua non esiste in menu_languages, un ID è assente, il testo
+italiano è cambiato o altri vincoli falliscono, la transazione fallisce.
+Non aggirare tali errori: confrontare il database con i file originali.
+Non creare o sostituire ID manualmente per forzare il passaggio.
+I record non presenti nella consegna non vengono eliminati.
+
+Il valore letterale null del CSV italiano è interpretato come SQL NULL.
+Il controllo sulla fonte richiede che nel database sia davvero NULL:
+se fosse la stringa di testo 'null', l’importazione si interromperebbe.
+I campi senza testo non ricevono traduzioni inventate.
+La tabella menu_translation_state non è aggiornata: l’algoritmo applicativo
+per source_hash non è fornito. Sono interessate soltanto le cinque tabelle
+richieste, senza modifiche alla logica del sito.
+
+QUALITÀ E FONTE
+Questa è redazione e revisione linguistica assistita AI in chat, senza
+certificazione di un traduttore madrelingua. Lo stato REVISIONATA indica
+questa revisione e non un’approvazione umana o del ristorante.
+Le 456 righe APPROVATA conservano esattamente le traduzioni fornite.
+PRESERVATO_VERIFICATO indica nomi commerciali, produttori, nomi di ricette
+italiane e cultivar mantenuti dalla fonte. I nomi delle pizze di fantasia
+rimangono italiani; ingredienti e titoli descrittivi sono tradotti.
+Denominazioni D.O.P., I.G.P., DOC e DOCG e nomi commerciali restano riconoscibili.
+
+anomalie_fonte_italiana.csv segnala possibili inesattezze già presenti nella
+fonte italiana. Le traduzioni le conservano; nessun fatto è stato corretto
+silenziosamente. Le segnalazioni non sono verificate tramite fonti esterne.
+registro_revisione.csv documenta prima, dopo e criterio di ogni campo.
+glossario_19_lingue.csv raccoglie il lessico usato nelle traduzioni.
+verifiche.json e controlli.json riportano i controlli e i loro limiti.
+fonti/ conserva gli allegati originali senza modifiche.
+
+RIGENERAZIONE OFFLINE
+python3 prepara_importazione.py --fonte fonti/italiano_originale.csv \
+ --traduzioni Marechiaro_menu_19_lingue.csv \
+ --approvazioni-originali fonti/bozze_originali.csv \
+ --null-come-sql-null --output nuova_importazione
+Il generatore richiede Python 3.12 per la gestione CSV dei NULL.
+Non apre connessioni al database né usa servizi esterni.

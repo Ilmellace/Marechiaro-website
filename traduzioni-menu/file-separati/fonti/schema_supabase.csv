@@ -1,0 +1,365 @@
+table_name,ordine,column_name,data_type,tipo_postgres,is_nullable,column_default,vincoli_tabella
+admin_users,1,user_id,uuid,uuid,NO,null,"PRIMARY KEY (user_id)
+FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+admin_users,2,created_at,timestamp with time zone,timestamptz,NO,now(),"PRIMARY KEY (user_id)
+FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+beach_options,1,id,bigint,int8,NO,null,PRIMARY KEY (id)
+beach_options,2,nome,text,text,NO,null,PRIMARY KEY (id)
+beach_options,3,descrizione,text,text,YES,null,PRIMARY KEY (id)
+beach_options,4,immagine,text,text,YES,null,PRIMARY KEY (id)
+beach_options,5,ordine,integer,int4,NO,0,PRIMARY KEY (id)
+beach_options,6,attiva,boolean,bool,NO,true,PRIMARY KEY (id)
+beach_options,7,created_at,timestamp with time zone,timestamptz,NO,now(),PRIMARY KEY (id)
+beach_options,8,updated_at,timestamp with time zone,timestamptz,NO,now(),PRIMARY KEY (id)
+beach_prices,1,id,bigint,int8,NO,null,"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,2,option_id,bigint,int8,NO,null,"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,3,durata,text,text,NO,null,"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,4,mese,text,text,NO,null,"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,5,prezzo,numeric,numeric,YES,null,"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,6,prezzo_testo,text,text,YES,null,"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,7,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_prices,8,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (option_id) REFERENCES beach_options(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (option_id, durata, mese)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))"
+beach_settings,1,id,bigint,int8,NO,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+beach_settings,2,chiave,text,text,NO,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+beach_settings,3,valore,text,text,YES,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+beach_settings,4,updated_at,timestamp with time zone,timestamptz,NO,now(),"UNIQUE (chiave)
+PRIMARY KEY (id)"
+menu_categories,1,id,bigint,int8,NO,null,"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_categories,2,slug,text,text,NO,null,"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_categories,3,nome,text,text,NO,null,"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_categories,4,ordine,integer,int4,NO,0,"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_categories,5,attiva,boolean,bool,NO,true,"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_categories,6,created_at,timestamp with time zone,timestamptz,NO,now(),"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_categories,7,updated_at,timestamp with time zone,timestamptz,NO,now(),"PRIMARY KEY (id)
+UNIQUE (slug)"
+menu_category_translations,1,id,bigint,int8,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (category_id, language_code)"
+menu_category_translations,2,category_id,bigint,int8,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (category_id, language_code)"
+menu_category_translations,3,language_code,text,text,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (category_id, language_code)"
+menu_category_translations,4,nome,text,text,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (category_id, language_code)"
+menu_category_translations,5,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (category_id, language_code)"
+menu_category_translations,6,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (category_id, language_code)"
+menu_intro,1,id,bigint,int8,NO,null,PRIMARY KEY (id)
+menu_intro,2,titolo,text,text,NO,null,PRIMARY KEY (id)
+menu_intro,3,testo,text,text,NO,null,PRIMARY KEY (id)
+menu_intro,4,ordine,integer,int4,NO,0,PRIMARY KEY (id)
+menu_intro,5,attivo,boolean,bool,NO,true,PRIMARY KEY (id)
+menu_intro,6,created_at,timestamp with time zone,timestamptz,NO,now(),PRIMARY KEY (id)
+menu_intro,7,updated_at,timestamp with time zone,timestamptz,NO,now(),PRIMARY KEY (id)
+menu_intro_translations,1,id,bigint,int8,NO,null,"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_intro_translations,2,intro_id,bigint,int8,NO,null,"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_intro_translations,3,language_code,text,text,NO,null,"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_intro_translations,4,titolo,text,text,YES,null,"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_intro_translations,5,testo,text,text,YES,null,"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_intro_translations,6,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_intro_translations,7,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (intro_id) REFERENCES menu_intro(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (intro_id, language_code)"
+menu_item_translations,1,id,bigint,int8,NO,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,2,item_id,bigint,int8,NO,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,3,language_code,text,text,NO,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,4,nome,text,text,YES,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,5,descrizione,text,text,YES,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,6,vitigni,text,text,YES,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,7,produttore,text,text,YES,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,8,origine,text,text,YES,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,9,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,10,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_item_translations,11,regione,text,text,YES,null,"FOREIGN KEY (item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+UNIQUE (item_id, language_code)"
+menu_items,1,id,bigint,int8,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,2,category_id,bigint,int8,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,3,subcategory_id,bigint,int8,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,4,nome,text,text,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,5,descrizione,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,6,prezzo,numeric,numeric,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,7,prefisso_prezzo,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,8,unita_prezzo,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,9,prezzo_testo,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,10,regione,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,11,vitigni,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,12,produttore,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,13,origine,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,14,gradazione,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,15,ordine,integer,int4,NO,0,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,16,disponibile,boolean,bool,NO,true,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,17,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,18,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_items,19,allergeni,text,text,YES,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+PRIMARY KEY (id)
+CHECK (((prezzo IS NOT NULL) OR (prezzo_testo IS NOT NULL)))
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE"
+menu_languages,1,code,text,text,NO,null,PRIMARY KEY (code)
+menu_languages,2,nome,text,text,NO,null,PRIMARY KEY (code)
+menu_languages,3,flag,text,text,NO,null,PRIMARY KEY (code)
+menu_languages,4,ordine,integer,int4,NO,0,PRIMARY KEY (code)
+menu_languages,5,attiva,boolean,bool,NO,true,PRIMARY KEY (code)
+menu_languages,6,created_at,timestamp with time zone,timestamptz,NO,now(),PRIMARY KEY (code)
+menu_languages,7,updated_at,timestamp with time zone,timestamptz,NO,now(),PRIMARY KEY (code)
+menu_region_order,1,id,bigint,int8,NO,null,"PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, regione)"
+menu_region_order,2,subcategory_id,bigint,int8,NO,null,"PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, regione)"
+menu_region_order,3,regione,text,text,NO,null,"PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, regione)"
+menu_region_order,4,ordine,integer,int4,NO,0,"PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, regione)"
+menu_region_order,5,created_at,timestamp with time zone,timestamptz,NO,now(),"PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, regione)"
+menu_region_order,6,updated_at,timestamp with time zone,timestamptz,NO,now(),"PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, regione)"
+menu_setting_translations,1,id,bigint,int8,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (setting_id) REFERENCES menu_settings(id) ON DELETE CASCADE
+UNIQUE (setting_id, language_code)"
+menu_setting_translations,2,setting_id,bigint,int8,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (setting_id) REFERENCES menu_settings(id) ON DELETE CASCADE
+UNIQUE (setting_id, language_code)"
+menu_setting_translations,3,language_code,text,text,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (setting_id) REFERENCES menu_settings(id) ON DELETE CASCADE
+UNIQUE (setting_id, language_code)"
+menu_setting_translations,4,valore,text,text,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (setting_id) REFERENCES menu_settings(id) ON DELETE CASCADE
+UNIQUE (setting_id, language_code)"
+menu_setting_translations,5,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (setting_id) REFERENCES menu_settings(id) ON DELETE CASCADE
+UNIQUE (setting_id, language_code)"
+menu_setting_translations,6,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (setting_id) REFERENCES menu_settings(id) ON DELETE CASCADE
+UNIQUE (setting_id, language_code)"
+menu_settings,1,id,bigint,int8,NO,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+menu_settings,2,chiave,text,text,NO,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+menu_settings,3,valore,text,text,YES,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+menu_settings,4,updated_at,timestamp with time zone,timestamptz,NO,now(),"UNIQUE (chiave)
+PRIMARY KEY (id)"
+menu_subcategories,1,id,bigint,int8,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,2,category_id,bigint,int8,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,3,slug,text,text,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,4,nome,text,text,NO,null,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,5,ordine,integer,int4,NO,0,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,6,attiva,boolean,bool,NO,true,"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,7,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategories,8,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+UNIQUE (category_id, slug)
+PRIMARY KEY (id)"
+menu_subcategory_translations,1,id,bigint,int8,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, language_code)"
+menu_subcategory_translations,2,subcategory_id,bigint,int8,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, language_code)"
+menu_subcategory_translations,3,language_code,text,text,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, language_code)"
+menu_subcategory_translations,4,nome,text,text,NO,null,"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, language_code)"
+menu_subcategory_translations,5,created_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, language_code)"
+menu_subcategory_translations,6,updated_at,timestamp with time zone,timestamptz,NO,now(),"FOREIGN KEY (language_code) REFERENCES menu_languages(code) ON DELETE CASCADE
+PRIMARY KEY (id)
+FOREIGN KEY (subcategory_id) REFERENCES menu_subcategories(id) ON DELETE CASCADE
+UNIQUE (subcategory_id, language_code)"
+menu_translation_state,1,entity_type,text,text,NO,null,"PRIMARY KEY (entity_type, entity_id, field_name, language_code)"
+menu_translation_state,2,entity_id,text,text,NO,null,"PRIMARY KEY (entity_type, entity_id, field_name, language_code)"
+menu_translation_state,3,field_name,text,text,NO,null,"PRIMARY KEY (entity_type, entity_id, field_name, language_code)"
+menu_translation_state,4,language_code,text,text,NO,null,"PRIMARY KEY (entity_type, entity_id, field_name, language_code)"
+menu_translation_state,5,source_hash,text,text,NO,null,"PRIMARY KEY (entity_type, entity_id, field_name, language_code)"
+menu_translation_state,6,updated_at,timestamp with time zone,timestamptz,NO,now(),"PRIMARY KEY (entity_type, entity_id, field_name, language_code)"
+site_settings,1,id,bigint,int8,NO,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+site_settings,2,chiave,text,text,NO,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+site_settings,3,valore,text,text,YES,null,"UNIQUE (chiave)
+PRIMARY KEY (id)"
+site_settings,4,updated_at,timestamp with time zone,timestamptz,NO,now(),"UNIQUE (chiave)
+PRIMARY KEY (id)"
