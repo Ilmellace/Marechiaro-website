@@ -19,3 +19,18 @@ Nomi commerciali, produttori e denominazioni preservati. Le anomalie della fonte
 La revisione è assistita AI e non è una certificazione di un traduttore madrelingua.
 La sintassi PostgreSQL e PL/pgSQL è stata controllata, ma l’SQL non è stato eseguito su un database.
 Supabase non è stato modificato. Prima dell’esecuzione, leggere `LEGGIMI.txt` nel pacchetto e confermare l’importazione.
+
+## Tutti i file separati
+
+[Apri la cartella con tutti i file](file-separati). Ogni file è disponibile singolarmente senza estrarre lo ZIP.
+
+- [Categorie](file-separati/tabelle_supabase/menu_category_translations.csv)
+- [Sottocategorie](file-separati/tabelle_supabase/menu_subcategory_translations.csv)
+- [Introduzioni](file-separati/tabelle_supabase/menu_intro_translations.csv)
+- [Note e impostazioni](file-separati/tabelle_supabase/menu_setting_translations.csv)
+- [Prodotti](file-separati/tabelle_supabase/menu_item_translations.csv)
+- [SQL per tutte le cinque tabelle](file-separati/Marechiaro_importazione_19_lingue.sql)
+- [CSV unico del menù nelle 19 lingue](file-separati/Marechiaro_menu_19_lingue.csv)
+- [Istruzioni](file-separati/LEGGIMI.txt)
+
+Sono presenti anche glossario, registro di revisione, rapporti dei controlli, anomalie della fonte italiana, script di rigenerazione e fonti originali. Per scaricare un singolo file, aprirlo e premere l’icona **Download raw file**.

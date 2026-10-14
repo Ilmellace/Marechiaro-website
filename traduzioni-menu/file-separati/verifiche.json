@@ -1,0 +1,25 @@
+{
+  "utf8": "PASS",
+  "copertura_19_lingue": "PASS",
+  "duplicati": "ASSENTI",
+  "testi_italiani_invariati": "PASS",
+  "categorie_approvate_invariate": 456,
+  "nomi_vini_birre_distillati_preservati": "PASS",
+  "marchi_nelle_descrizioni_preservati": "PASS",
+  "percentuali_vitigni_invariate": "PASS",
+  "campi_vuoti_e_null_non_tradotti": "PASS",
+  "coerenza_csv_tabellari": "PASS",
+  "righe_csv_tabellari": {
+    "menu_category_translations": 133,
+    "menu_subcategory_translations": 323,
+    "menu_intro_translations": 76,
+    "menu_setting_translations": 152,
+    "menu_item_translations": 5890
+  },
+  "sql_sintassi_postgresql": "PASS",
+  "sql_blocchi_plpgsql": "PASS",
+  "sql_istruzioni": 44,
+  "sql_blocchi": 10,
+  "sql_eseguito_su_database": false,
+  "verifica_madrelingua": false
+}
